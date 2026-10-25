@@ -3,9 +3,9 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [App\Http\Controllers\TreatmentController::class, 'index'])->name('home');
+
+Route::view('/kontakt', 'contact')->name('contact');
 
 Route::middleware(['auth', 'admin'])
     ->prefix('admin')
