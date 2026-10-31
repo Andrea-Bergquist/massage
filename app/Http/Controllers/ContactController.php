@@ -10,8 +10,8 @@ class ContactController extends Controller
     {
         // 1. Honeypot-kontroll: Om fältet är ifyllt, avbryt tyst
         if ($request->filled('website')) {
-            // Vi skickar tillbaka användaren (botten) med ett lyckat meddelande 
-            // så att botten tror att inskicket fungerade.
+            // Vi skickar tillbaka användaren (spamboten) med ett lyckat meddelande 
+            // så att boten tror att inskicket fungerade.
             return redirect()->back()->with('message', 'Tack för ditt meddelande, vi hör av oss!');
         }
 

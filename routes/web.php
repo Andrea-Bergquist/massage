@@ -6,8 +6,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [App\Http\Controllers\TreatmentController::class, 'index'])->name('home');
 
+Route::view('/om-oss', 'about')->name('about');
+
 Route::view('/kontakt', 'contact')->name('contact');
 Route::post('/kontakt', [ContactController::class, 'store'])->name('contact.store');
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware(['auth', 'admin'])
     ->prefix('admin')

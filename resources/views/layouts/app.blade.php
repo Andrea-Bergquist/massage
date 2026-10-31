@@ -18,6 +18,8 @@
         @yield('content')
 
         @yield('contact')
+
+        @yield('about')
     </main>
 
     <footer class="bg-emerald-950 text-white">

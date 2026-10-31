@@ -41,6 +41,70 @@
     </div>
 </section>
 
+<!-- ================= NY USP / FEATURE SEKTION ================= -->
+<section class="relative z-20 mx-auto max-w-7xl px-6 -mt-12 md:-mt-16">
+    <div class="grid gap-6 rounded-2xl border border-stone-200 bg-white p-6 shadow-md sm:grid-cols-2 lg:grid-cols-4">
+
+        <!-- Erfarna terapeuter -->
+        <div class="flex items-center space-x-4 p-2">
+            <div class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-emerald-50 text-emerald-700">
+                <!-- Användar/Terapeut-ikon -->
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                </svg>
+            </div>
+            <div>
+                <h4 class="font-semibold text-stone-900 text-sm">Erfarna terapeuter</h4>
+                <p class="text-xs text-stone-500 mt-0.5">Utbildade och certifierade</p>
+            </div>
+        </div>
+
+        <!-- Naturliga oljor -->
+        <div class="flex items-center space-x-4 p-2">
+            <div class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-emerald-50 text-emerald-700">
+                <!-- Droppe/Olja-ikon -->
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12 16.5a4.5 4.5 0 1 1 0-9 4.5 4.5 0 0 1 0 9Z" />
+                </svg>
+            </div>
+            <div>
+                <h4 class="font-semibold text-stone-900 text-sm">Naturliga oljor</h4>
+                <p class="text-xs text-stone-500 mt-0.5">För en bättre upplevelse</p>
+            </div>
+        </div>
+
+        <!-- Lugn miljö -->
+        <div class="flex items-center space-x-4 p-2">
+            <div class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-emerald-50 text-emerald-700">
+                <!-- Lotus/Växt/Miljö-ikon -->
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v18M3 12h18M5.25 5.25l13.5 13.5M5.25 18.75L18.75 5.25" />
+                </svg>
+            </div>
+            <div>
+                <h4 class="font-semibold text-stone-900 text-sm">Lugn miljö</h4>
+                <p class="text-xs text-stone-500 mt-0.5">En oas mitt i staden</p>
+            </div>
+        </div>
+
+        <!-- Boka enkelt -->
+        <div class="flex items-center space-x-4 p-2">
+            <div class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-emerald-50 text-emerald-700">
+                <!-- Kalender-ikon -->
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
+                </svg>
+            </div>
+            <div>
+                <h4 class="font-semibold text-stone-900 text-sm">Boka enkelt</h4>
+                <p class="text-xs text-stone-500 mt-0.5">Online eller på plats</p>
+            </div>
+        </div>
+
+    </div>
+</section>
+<!-- ============================================================= -->
+
 <section id="treatments" class="mx-auto max-w-7xl px-6 py-20">
     <h2 class="text-3xl font-semibold">
         Våra behandlingar
@@ -48,13 +112,12 @@
 
     <div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         @foreach ($treatments as $treatment)
-        <!-- Ändring: h-full, flex och flex-col gör att kortet kan styra höjden på sitt innehåll -->
         <article class="flex flex-col h-full rounded-2xl border border-stone-200 bg-white p-6 shadow-sm">
             <h3 class="text-xl font-semibold">
                 {{ $treatment->name }}
             </h3>
             <hr class="my-4 border-stone-300">
-            <!-- Ändring: flex-grow gör att texten tar upp allt tillgängligt utrymme så att priset trycks ner -->
+
             <p class="mt-3 text-stone-600 flex-grow">
                 {{ $treatment->description }}
             </p>
@@ -63,7 +126,7 @@
                 Behandlingstid: {{ $treatment->duration_minutes }} minuter
             </p>
             <hr class="my-4 border-stone-300">
-            <!-- Ändring: mt-auto tvingar ner priset till botten så att alla priser linjerar perfekt -->
+
             <p class="mt-auto pt-2 text-2xl font-semibold">
                 {{ number_format($treatment->price/100, 0, ',', ' ') }} kr
             </p>
