@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="absolute left-0 right-0 top-0 z-50 bg-gradient-to-r from-emerald-950 via-emerald-950/40 to-transparent text-white">
+<nav x-data="{ open: false }" class="fixed left-0 right-0 top-0 z-50 bg-gradient-to-r from-emerald-950 via-emerald-950/40 to-transparent text-white">
     <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
 
         <!-- Logotyp -->
@@ -12,6 +12,12 @@
             <a href="{{ route('home') }}"
                 class="pb-1 transition border-b-2 {{ Route::is('home') ? 'border-emerald-400 text-white font-semibold' : 'border-transparent text-stone-200 hover:text-white hover:border-stone-400' }}">
                 Hem
+            </a>
+
+            <!-- Prislista -->
+            <a href="{{ route('home') }}#pricing"
+                class="pb-1 transition border-b-2 border-transparent text-stone-200 hover:text-white hover:border-stone-400">
+                Prislista
             </a>
 
             <!-- Om oss -->
@@ -83,6 +89,12 @@
             <a @click="open = false" href="{{ route('home') }}"
                 class="px-3 py-2 rounded-lg transition {{ Route::is('home') ? 'bg-emerald-800 text-white font-semibold' : 'text-stone-200 hover:bg-emerald-900 hover:text-white' }}">
                 Hem
+            </a>
+
+            <!-- Prislista -->
+            <a @click="open = false" href="{{ route('home') }}#pricing"
+                class="px-3 py-2 rounded-lg text-stone-200 hover:bg-emerald-900 hover:text-white transition">
+                Prislista
             </a>
 
             <!-- Om oss -->
