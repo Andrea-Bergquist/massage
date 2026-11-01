@@ -50,7 +50,7 @@
                     <p class="text-sm text-stone-500 mt-1">Lägg till nya thaimassager, ändra priser eller justera behandlingstider.</p>
                 </div>
                 <div class="mt-6">
-                    <a href="#" class="inline-flex items-center gap-2 text-sm font-semibold text-emerald-600 hover:text-emerald-700 transition">
+                    <a href="{{ route('admin.treatments.index') }}" class="inline-flex items-center gap-2 text-sm font-semibold text-emerald-600 hover:text-emerald-700 transition">
                         Hantera priser & utbud
                         <span>&rarr;</span>
                     </a>

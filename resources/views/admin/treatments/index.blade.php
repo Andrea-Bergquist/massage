@@ -43,7 +43,7 @@
                 <h3 class="text-lg font-semibold text-stone-900 mb-1">Lägg till ny behandling</h3>
                 <p class="text-xs text-stone-500 mb-6">Skapa en ny thaimassage eller tjänst i prislistan.</p>
 
-                <form action="#" method="POST" class="space-y-4">
+                <form action="{{ route('admin.treatments.store') }}" method="POST" class="space-y-4">
                     @csrf
                     <div>
                         <label for="name" class="block text-xs font-semibold uppercase tracking-wider text-stone-700 mb-1">Behandlingens namn</label>
@@ -84,113 +84,72 @@
                         <p class="text-xs text-stone-500">Justera värden direkt i fälten och spara, eller ta bort gamla alternativ.</p>
                     </div>
                     <span class="text-xs font-medium bg-emerald-50 text-emerald-800 px-2.5 py-1 rounded-full border border-emerald-100">
-                        <!-- Ersätt med dynamisk räknare, t.ex. {{$treatments->count()}} -->
-                        3 Behandlingar
+                        {{ $treatments->count() }} Behandlingar
                     </span>
                 </div>
 
-                <!-- BEHANDLINGSKORT (Loopa ut dessa med @foreach) -->
-
-                <!-- Exempelkort 1 -->
+                @foreach($treatments as $treatment)
                 <div class="bg-white border border-stone-200 p-6 rounded-2xl shadow-sm transition hover:border-stone-300">
-                    <form action="#" method="POST">
-                        @csrf
-                        @method('PUT')
 
-                        <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-start">
+                    <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-start">
+
+                        <!-- Uppdateringsformulär (Täcker fälten och Uppdatera-knappen) -->
+                        <form action="{{ route('admin.treatments.update', $treatment->id) }}" method="POST" class="md:col-span-10 grid grid-cols-1 md:grid-cols-12 gap-4 items-start m-0">
+                            @csrf
+                            @method('PUT')
+
                             <!-- Namn & Beskrivning -->
-                            <div class="md:col-span-6 space-y-3">
-                                <input type="text" name="name" value="Traditionell Thaimassage"
+                            <div class="md:col-span-7 space-y-3">
+                                <input type="text" name="name" value="{{ $treatment->name }}"
                                     class="w-full font-semibold text-stone-900 border-transparent hover:border-stone-200 focus:border-emerald-500 focus:ring-emerald-500 rounded-xl bg-transparent focus:bg-stone-50 px-3 py-1 transition text-base">
 
                                 <textarea name="description" rows="2"
-                                    class="w-full text-sm text-stone-500 border-transparent hover:border-stone-200 focus:border-emerald-500 focus:ring-emerald-500 rounded-xl bg-transparent focus:bg-stone-50 px-3 py-1 transition resize-none">Djupgående muskelmassage med stretching-element som ökar flexibiliteten och löser upp spänningar.</textarea>
+                                    class="w-full text-sm text-stone-500 border-transparent hover:border-stone-200 focus:border-emerald-500 focus:ring-emerald-500 rounded-xl bg-transparent focus:bg-stone-50 px-3 py-1 transition resize-none">{{ $treatment->description }}</textarea>
                             </div>
 
                             <!-- Tid & Pris -->
-                            <div class="md:col-span-4 grid grid-cols-2 gap-2">
+                            <div class="md:col-span-5 grid grid-cols-2 gap-2">
                                 <div>
                                     <label class="block text-[10px] font-bold uppercase tracking-wider text-stone-400 mb-1 pl-3">Tid (min)</label>
-                                    <input type="number" name="duration" value="60"
+                                    <input type="number" name="duration" value="{{ $treatment->duration }}"
                                         class="w-full text-sm text-stone-800 font-medium bg-stone-50 border-stone-200 focus:border-emerald-500 focus:ring-emerald-500 rounded-xl px-3 py-2 transition">
                                 </div>
                                 <div>
                                     <label class="block text-[10px] font-bold uppercase tracking-wider text-stone-400 mb-1 pl-3">Pris (kr)</label>
-                                    <input type="number" name="price" value="600"
+                                    <input type="number" name="price" value="{{ $treatment->price/100 }}"
                                         class="w-full text-sm text-emerald-800 font-semibold bg-stone-50 border-stone-200 focus:border-emerald-500 focus:ring-emerald-500 rounded-xl px-3 py-2 transition">
                                 </div>
                             </div>
 
-                            <!-- Åtgärder (Spara / Radera) -->
-                            <div class="md:col-span-2 flex md:flex-col justify-end gap-2 pt-4 md:pt-0 h-full">
-                                <button type="submit" class="flex-1 md:w-full inline-flex justify-center items-center px-3 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-xl transition cursor-pointer" title="Spara ändringar">
-                                    Uppdatera
+                            <button type="submit" class="hidden"></button>
+                        </form>
+
+                        <!-- Åtgärdsknappar -->
+                        <div class="md:col-span-2 flex md:flex-col justify-end gap-2 pt-4 md:pt-0 h-full">
+
+                            <button type="submit" onclick="event.preventDefault(); this.closest('.grid').querySelector('form').submit();" class="flex-1 md:w-full inline-flex justify-center items-center px-3 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-xl transition cursor-pointer" title="Spara ändringar">
+                                Uppdatera
+                            </button>
+
+                            <!-- Radera-formulär -->
+                            <form action="{{ route('admin.treatments.destroy', $treatment->id) }}" method="POST" class="flex-1 md:w-full m-0" onsubmit="return confirm('Är du säker på att du vill radera denna behandling?');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="w-full inline-flex justify-center items-center px-3 py-2 border border-red-200 hover:bg-red-50 text-red-600 text-xs font-medium rounded-xl transition cursor-pointer" title="Radera behandling">
+                                    Radera
                                 </button>
-                    </form>
-                    <!-- Separat form för radering av säkerhetsskäl -->
-                    <form action="#" method="POST" class="flex-1 md:w-full" onsubmit="return confirm('Är du säker på att du vill radera denna behandling?');">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="w-full inline-flex justify-center items-center px-3 py-2 border border-red-200 hover:bg-red-50 text-red-600 text-xs font-medium rounded-xl transition window-cursor" title="Radera behandling">
-                            Radera
-                        </button>
-                    </form>
+                            </form>
+
+                        </div>
+                    </div>
+
                 </div>
+                @endforeach
+
             </div>
         </div>
 
-        <!-- Exempelkort 2 -->
-        <div class="bg-white border border-stone-200 p-6 rounded-2xl shadow-sm transition hover:border-stone-300">
-            <form action="#" method="POST">
-                @csrf
-                @method('PUT')
-
-                <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-start">
-                    <!-- Namn & Beskrivning -->
-                    <div class="md:col-span-6 space-y-3">
-                        <input type="text" name="name" value="Oljemassage"
-                            class="w-full font-semibold text-stone-900 border-transparent hover:border-stone-200 focus:border-emerald-500 focus:ring-emerald-500 rounded-xl bg-transparent focus:bg-stone-50 px-3 py-1 transition text-base">
-
-                        <textarea name="description" rows="2"
-                            class="w-full text-sm text-stone-500 border-transparent hover:border-stone-200 focus:border-emerald-500 focus:ring-emerald-500 rounded-xl bg-transparent focus:bg-stone-50 px-3 py-1 transition resize-none">En mer avslappnande massageform med aromatiska oljor som mjukar upp huden och sinnet.</textarea>
-                    </div>
-
-                    <!-- Tid & Pris -->
-                    <div class="md:col-span-4 grid grid-cols-2 gap-2">
-                        <div>
-                            <label class="block text-[10px] font-bold uppercase tracking-wider text-stone-400 mb-1 pl-3">Tid (min)</label>
-                            <input type="number" name="duration" value="90"
-                                class="w-full text-sm text-stone-800 font-medium bg-stone-50 border-stone-200 focus:border-emerald-500 focus:ring-emerald-500 rounded-xl px-3 py-2 transition">
-                        </div>
-                        <div>
-                            <label class="block text-[10px] font-bold uppercase tracking-wider text-stone-400 mb-1 pl-3">Pris (kr)</label>
-                            <input type="number" name="price" value="850"
-                                class="w-full text-sm text-emerald-800 font-semibold bg-stone-50 border-stone-200 focus:border-emerald-500 focus:ring-emerald-500 rounded-xl px-3 py-2 transition">
-                        </div>
-                    </div>
-
-                    <!-- Åtgärder (Spara / Radera) -->
-                    <div class="md:col-span-2 flex md:flex-col justify-end gap-2 pt-4 md:pt-0 h-full">
-                        <button type="submit" class="flex-1 md:w-full inline-flex justify-center items-center px-3 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-xl transition cursor-pointer" title="Spara ändringar">
-                            Uppdatera
-                        </button>
-            </form>
-            <!-- Separat form för radering av säkerhetsskäl -->
-            <form action="#" method="POST" class="flex-1 md:w-full" onsubmit="return confirm('Är du säker på att du vill radera denna behandling?');">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="w-full inline-flex justify-center items-center px-3 py-2 border border-red-200 hover:bg-red-50 text-red-600 text-xs font-medium rounded-xl transition cursor-pointer" title="Radera behandling">
-                    Radera
-                </button>
-            </form>
-        </div>
     </div>
-</div>
-
-</div>
-</div>
-
-</div>
 </div>
 
 @endsection

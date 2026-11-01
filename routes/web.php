@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ContactController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
 
 Route::get('/', [App\Http\Controllers\TreatmentController::class, 'index'])->name('home');
 
@@ -23,7 +24,7 @@ Route::middleware(['auth', 'admin'])
             return view('admin.dashboard');
         })->name('dashboard');
 
-        // Lägg till dina CRUD-rutter här.
+        Route::resource('treatments', App\Http\Controllers\AdminController::class);
     });
 
 Route::middleware('auth')->group(function () {
