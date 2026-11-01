@@ -41,7 +41,7 @@ class AdminController extends Controller
         // Convert price to cents
         $validatedData['price'] = $validatedData['price'] * 100;
 
-        Treatment::create($validatedData);  
+        Treatment::create($validatedData);
 
         return redirect()->route('admin.treatments.index')->with('success', 'Behandling skapad!');
     }
@@ -67,7 +67,22 @@ class AdminController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $treatment = Treatment::findOrFail($id);
+
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'price' => 'required|numeric|min:0',
+            'duration_minutes' => 'required|integer|min:1',
+        ]);
+        // Generate slug from name
+        $validatedData['slug'] = $validatedData['name'];
+        // Convert price to cents
+        $validatedData['price'] = $validatedData['price'] * 100;
+
+        $treatment->update($validatedData);
+
+        return redirect()->route('admin.treatments.index')->with('success', 'Behandling uppdaterad!');
     }
 
     /**

@@ -111,7 +111,7 @@
                             <div class="md:col-span-5 grid grid-cols-2 gap-2">
                                 <div>
                                     <label class="block text-[10px] font-bold uppercase tracking-wider text-stone-400 mb-1 pl-3">Tid (min)</label>
-                                    <input type="number" name="duration" value="{{ $treatment->duration }}"
+                                    <input type="number" name="duration_minutes" value="{{ $treatment->duration_minutes }}"
                                         class="w-full text-sm text-stone-800 font-medium bg-stone-50 border-stone-200 focus:border-emerald-500 focus:ring-emerald-500 rounded-xl px-3 py-2 transition">
                                 </div>
                                 <div>

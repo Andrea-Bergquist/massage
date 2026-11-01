@@ -8,6 +8,14 @@
     <title>@yield('title', 'Thai Serenity')</title>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    <!-- Lägg till Cloudflare Turnstile scriptet i head via en stack, eller direkt här om layouts.app tillåter det -->
+    <script
+        src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+        async
+        defer>
+    </script>
+
 </head>
 
 <body class="bg-stone-50 text-stone-800 antialiased">

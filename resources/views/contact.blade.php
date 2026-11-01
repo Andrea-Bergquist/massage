@@ -33,9 +33,9 @@
     <div x-data="{ show: true }"
         x-show="show"
         x-init="setTimeout(() => show = false, 3000)"
-        x-transition:leave="transition ease-in-out duration-[1500ms]" {{-- Ändrat till 1500ms för en långsammare uttoning --}}
+        x-transition:leave="transition ease-in-out duration-[1500ms]"
         x-transition:leave-start="opacity-100 scale-100"
-        x-transition:leave-end="opacity-0 scale-98" {{-- Ändrat till 98 för en mer subtil krympning --}}
+        x-transition:leave-end="opacity-0 scale-98"
         class="mb-6 p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 shadow-sm flex items-center space-x-3">
 
         <!-- Grön bock-ikon (Heroicons) -->
@@ -46,55 +46,69 @@
     </div>
     @endif
 
-    <div class="bg-white p-8 rounded-2xl shadow-sm border border-stone-200">
-        <h2 class="text-2xl font-semibold text-stone-900 mb-6">Kontakta oss</h2>
+    <!-- NY DESIGN: Matchar inloggningskortets utseende perfekt -->
+    <div class="rounded-2xl border border-white/10 bg-emerald-950/80 p-8 shadow-2xl backdrop-blur-md">
 
-        <form method="POST" action="{{ route('contact.store') }}" class="space-y-5">
+        <!-- Rubrik formaterad som inloggningskortet -->
+        <div class="text-center mb-8">
+            <p class="text-xs font-semibold uppercase tracking-[0.25em] text-emerald-200 mb-2">
+                Hör av dig till oss
+            </p>
+            <h2 class="text-3xl font-semibold text-white tracking-tight">
+                Kontakta oss
+            </h2>
+        </div>
+
+        <form method="POST" action="{{ route('contact.store') }}" class="space-y-6">
             @csrf
 
             <!-- Namn -->
             <div>
-                <label for="name" class="block text-sm font-medium text-stone-700">Namn</label>
+                <label for="name" class="block text-sm font-medium text-stone-200 mb-1">Namn</label>
                 <input id="name"
                     name="name"
                     type="text"
                     value="{{ old('name') }}"
                     required
                     autocomplete="name"
-                    class="mt-1 w-full rounded-lg border p-3 outline-none transition focus:ring-1 
-               {{ $errors->has('name') ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : 'border-stone-300 focus:border-emerald-600 focus:ring-emerald-600' }}">
+                    placeholder="Ditt för- och efternamn"
+                    class="w-full rounded-full border bg-white/10 px-4 py-3 text-white placeholder-stone-400 backdrop-blur-sm focus:outline-none focus:ring-1 transition
+                    {{ $errors->has('name') ? 'border-red-400 focus:border-red-400 focus:ring-red-400' : 'border-white/20 focus:border-emerald-400 focus:ring-emerald-400' }}">
                 @error('name')
-                <p class="mt-1.5 text-sm text-red-600 font-medium">{{ $message }}</p>
+                <p class="mt-1 text-xs text-red-400">{{ $message }}</p>
                 @enderror
             </div>
 
             <!-- E-post -->
             <div>
-                <label for="email" class="block text-sm font-medium text-stone-700">E-post</label>
+                <label for="email" class="block text-sm font-medium text-stone-200 mb-1">E-post</label>
                 <input id="email"
                     name="email"
                     type="email"
                     value="{{ old('email') }}"
                     required
                     autocomplete="email"
-                    class="mt-1 w-full rounded-lg border p-3 outline-none transition focus:ring-1 
-               {{ $errors->has('email') ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : 'border-stone-300 focus:border-emerald-600 focus:ring-emerald-600' }}">
+                    placeholder="namn@exempel.se"
+                    class="w-full rounded-full border bg-white/10 px-4 py-3 text-white placeholder-stone-400 backdrop-blur-sm focus:outline-none focus:ring-1 transition
+                    {{ $errors->has('email') ? 'border-red-400 focus:border-red-400 focus:ring-red-400' : 'border-white/20 focus:border-emerald-400 focus:ring-emerald-400' }}">
                 @error('email')
-                <p class="mt-1.5 text-sm text-red-600 font-medium">{{ $message }}</p>
+                <p class="mt-1 text-xs text-red-400">{{ $message }}</p>
                 @enderror
             </div>
 
             <!-- Meddelande -->
             <div>
-                <label for="message" class="block text-sm font-medium text-stone-700">Meddelande</label>
+                <label for="message" class="block text-sm font-medium text-stone-200 mb-1">Meddelande</label>
+                <!-- Notera: Avrundat hörn ändrat till rounded-2xl här eftersom rounded-full inte fungerar bra på textareas -->
                 <textarea id="message"
                     name="message"
                     rows="5"
                     required
-                    class="mt-1 w-full rounded-lg border p-3 outline-none transition focus:ring-1 
-                  {{ $errors->has('message') ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : 'border-stone-300 focus:border-emerald-600 focus:ring-emerald-600' }}">{{ old('message') }}</textarea>
+                    placeholder="Skriv ditt meddelande här..."
+                    class="w-full rounded-2xl border bg-white/10 px-4 py-3 text-white placeholder-stone-400 backdrop-blur-sm focus:outline-none focus:ring-1 transition
+                    {{ $errors->has('message') ? 'border-red-400 focus:border-red-400 focus:ring-red-400' : 'border-white/20 focus:border-emerald-400 focus:ring-emerald-400' }}">{{ old('message') }}</textarea>
                 @error('message')
-                <p class="mt-1.5 text-sm text-red-600 font-medium">{{ $message }}</p>
+                <p class="mt-1 text-xs text-red-400">{{ $message }}</p>
                 @enderror
             </div>
 
@@ -104,10 +118,29 @@
                 <input id="website" name="website" type="text" tabindex="-1" autocomplete="off">
             </div>
 
-            <button type="submit"
-                class="w-full sm:w-auto rounded-lg bg-emerald-900 px-6 py-3 font-medium text-white hover:bg-emerald-800 transition duration-200">
-                Skicka meddelande
-            </button>
+            <!-- CLOUDFLARE TURNSTILE WIDGET -->
+            <!-- data-theme="dark" gör att den matchar det mörka kortet perfekt -->
+            <div class="flex justify-center py-2">
+                <div class="cf-turnstile"
+                    data-sitekey="{{ config('services.cloudflare_turnstile.site_key') }}"
+                    data-theme="dark"
+                    data-size="flexible">
+                </div>
+            </div>
+            @error('cf-turnstile-response')
+            <p class="text-center text-xs text-red-400 mt-[-12px] mb-2">{{ $message }}</p>
+            @enderror
+
+            <!-- Knapp med full bredd och matchande ikon för skicka-funktionen -->
+            <div>
+                <button type="submit"
+                    class="w-full inline-flex items-center justify-center gap-2 rounded-full bg-emerald-600 px-6 py-3 font-medium text-white hover:bg-emerald-700 transition shadow-lg cursor-pointer">
+                    Skicka meddelande
+                    <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
+                    </svg>
+                </button>
+            </div>
         </form>
     </div>
 </div>
