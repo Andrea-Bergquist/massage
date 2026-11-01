@@ -60,7 +60,7 @@
                     <div class="grid grid-cols-2 gap-4">
                         <div>
                             <label for="duration" class="block text-xs font-semibold uppercase tracking-wider text-stone-700 mb-1">Tid (minuter)</label>
-                            <input type="number" name="duration" id="duration" required placeholder="60"
+                            <input type="number" name="duration_minutes" id="duration_minutes" required placeholder="60"
                                 class="w-full rounded-xl border-stone-200 bg-stone-50/50 text-sm focus:border-emerald-500 focus:ring-emerald-500 transition px-4 py-2.5">
                         </div>
                         <div>

@@ -30,7 +30,20 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'price' => 'required|numeric|min:0',
+            'duration_minutes' => 'required|integer|min:1',
+        ]);
+        // Generate slug from name
+        $validatedData['slug'] = $validatedData['name'];
+        // Convert price to cents
+        $validatedData['price'] = $validatedData['price'] * 100;
+
+        Treatment::create($validatedData);  
+
+        return redirect()->route('admin.treatments.index')->with('success', 'Behandling skapad!');
     }
 
     /**
@@ -62,6 +75,9 @@ class AdminController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $treatment = Treatment::findOrFail($id);
+        $treatment->delete();
+
+        return redirect()->route('admin.treatments.index')->with('success', 'Behandling borttagen!');
     }
 }
