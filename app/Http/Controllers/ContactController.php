@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use App\Mail\ContactMessageMail;
+use Illuminate\Support\Facades\Mail;
 
 class ContactController extends Controller
 {
@@ -86,8 +88,8 @@ class ContactController extends Controller
         ]);
 
         // 3. Skicka eller spara meddelandet
-        // Mail::to('info@thaiserenenity.se')
-        //     ->send(new ContactFormMail($validated));
+        Mail::to('andreabergquist@msn.com')
+            ->send(new ContactMessageMail($validated));
 
         // 4. Bekräftelse
         return redirect()->back()->with(
